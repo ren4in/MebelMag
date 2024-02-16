@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Extensions.Primitives;
+using System.Net;
 
 namespace MebelMag
 {
@@ -53,12 +54,54 @@ namespace MebelMag
             MessageBox.Show(user.FirstName);
 
         }
+
+        private async void AuthHandler()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(LoginBox.Text) || string.IsNullOrEmpty(PasswordB.Password))
+                    {
+                    throw new Exception("Введите логин и пароль!");
+                }
+               
+                Task<User> task = Store.UserAuthAsync(LoginBox.Text, PasswordB.Password);
+                User user = await task;
+
+                switch (user.IdRoleNavigation.RoleName)// определение роли при авторизации. Временно просто выводит название роли, потом будет направлять на соответсвующую страницу
+                {
+                    case ("Администратор"):
+                        MessageBox.Show("Администратор");
+                        break;
+                    case ("Продавец"):
+                        MessageBox.Show("Продавец");
+                        break;
+                    case ("Кладовщик"):
+                        MessageBox.Show("Кладовщик");
+                        break;
+                    case ("Приемщик поставок"):
+                        MessageBox.Show("Приемщик поставок");
+                        break;
+                    case ("Кассир"):
+                        MessageBox.Show("Кассир");
+                        break;
+                }
+             //   return task;
+            }
+            catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                MessageBox.Show("Неправильный логин или пароль!");
+             //   return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            //    return null;
+            }
+        }
             private async void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-           
-            Task<User> task=Store.UserAuthAsync(LoginBox.Text, PasswordB.Password);
-            User user = await task;
-             MessageBox.Show(user.IdRoleNavigation.RoleName);
+
+            AuthHandler();
         }
     }
 }

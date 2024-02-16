@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
- 
+using System.Web.Http;
 namespace MebelMag
 {
     public class Store
@@ -54,13 +55,17 @@ namespace MebelMag
             HttpResponseMessage response = await client.GetAsync($"api/users/auth?email={email}&password={password}");
             if (response.IsSuccessStatusCode)
             {
-               User  user = await response.Content.ReadAsAsync<User>();
+                User user = await response.Content.ReadAsAsync<User>();
                 return user;
             }
-            else
+
+             
+            else if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                return null;
+                throw new HttpRequestException("Unauthorized", null, response.StatusCode);
             }
+            else
+                return null;
 
         }
 
