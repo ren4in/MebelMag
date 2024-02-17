@@ -103,11 +103,7 @@ namespace MebelMag
             AuthHandler();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Store.GetRoleAsync();
-            }
-
+       
         }
     }
    
