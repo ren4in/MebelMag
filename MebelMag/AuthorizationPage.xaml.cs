@@ -65,8 +65,7 @@ namespace MebelMag
                 }
                
            await  Store.UserAuthAsync(LoginBox.Text, PasswordB.Password);
-                MessageBox.Show(Store.role + "  " + Store.token);
-
+ 
                 switch (Store.role)// определение роли при авторизации. Временно просто выводит название роли, потом будет направлять на соответсвующую страницу
                 {
                     case ("Администратор"):
@@ -103,5 +102,12 @@ namespace MebelMag
 
             AuthHandler();
         }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Store.GetRoleAsync();
+            }
+
+        }
     }
-}
+   

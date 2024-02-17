@@ -15,7 +15,6 @@ namespace MebelMag
     {
         public const string APP_PATH = "http://192.168.1.3";
         public static readonly HttpClient client = new HttpClient();
-        public static string token="";
         public static string role="";
         public static async Task<Uri> CreateRoleAsync(Role role)
         {
@@ -33,12 +32,13 @@ namespace MebelMag
             client.BaseAddress = new Uri(address);
         }
 
-        public static async Task<Role> GetRoleAsync(string path)
+        public static async Task<Role> GetRoleAsync()
         {
             Role role = null;
-            HttpResponseMessage response = await client.GetAsync(path);
+    
+            HttpResponseMessage response = await client.GetAsync("Api/Roles");
             if (response.IsSuccessStatusCode)
-            {
+            { 
                 role = await response.Content.ReadAsAsync<Role>();
             }
             return role;
@@ -65,10 +65,12 @@ namespace MebelMag
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var tokenResponse = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                 token = tokenResponse.access_token;
+                string token = tokenResponse.access_token;
                  role = tokenResponse.role;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 return (token, role);
             }
+
             else if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 throw new HttpRequestException("Unauthorized", null, response.StatusCode);
@@ -76,23 +78,6 @@ namespace MebelMag
             else
             {
                 throw new HttpRequestException("Error", null, response.StatusCode);
-                /*  HttpResponseMessage response = await client.GetAsync($"api/users/auth?email={email}&password={password}");
-                  if (response.IsSuccessStatusCode)
-                  {
-                      User user = await response.Content.ReadAsAsync<User>();
-                      return user;
-                  }
-
-
-                  else if (response.StatusCode == HttpStatusCode.Unauthorized)
-                  {
-                      throw new HttpRequestException("Unauthorized", null, response.StatusCode);
-                  }
-                  else
-                      return null;
-
-              }*/
-
         
             }
         }
