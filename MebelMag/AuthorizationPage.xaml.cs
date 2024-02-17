@@ -50,8 +50,8 @@ namespace MebelMag
                      }
 
                  }*/
-            User user = Store.UserAuthAsync(email, password);
-            MessageBox.Show(user.FirstName);
+            //User user = Store.UserAuthAsync(email, password);
+            //MessageBox.Show(user.FirstName);
 
         }
 
@@ -64,10 +64,10 @@ namespace MebelMag
                     throw new Exception("Введите логин и пароль!");
                 }
                
-                Task<User> task = Store.UserAuthAsync(LoginBox.Text, PasswordB.Password);
-                User user = await task;
+           await  Store.UserAuthAsync(LoginBox.Text, PasswordB.Password);
+                MessageBox.Show(Store.role + "  " + Store.token);
 
-                switch (user.IdRoleNavigation.RoleName)// определение роли при авторизации. Временно просто выводит название роли, потом будет направлять на соответсвующую страницу
+                switch (Store.role)// определение роли при авторизации. Временно просто выводит название роли, потом будет направлять на соответсвующую страницу
                 {
                     case ("Администратор"):
                         MessageBox.Show("Администратор");

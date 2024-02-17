@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace MebelMag
 {
     public class Store
     {
-        public const string APP_PATH = "http://localhost:62928";
+        public const string APP_PATH = "http://192.168.1.3";
         public static readonly HttpClient client = new HttpClient();
-         public static async Task<Uri> CreateRoleAsync(Role role)
+        public static string token="";
+        public static string role="";
+        public static async Task<Uri> CreateRoleAsync(Role role)
         {
             //     MessageBox.Show(role.Role_Name + " " + role.id_Role);
             HttpResponseMessage response = await client.PostAsJsonAsync(
@@ -49,25 +52,50 @@ namespace MebelMag
 
 
 
-        public static async Task<User> UserAuthAsync(string email, string password)
+        public static async Task<(string, string)> UserAuthAsync(string email, string password)
         {
- 
-            HttpResponseMessage response = await client.GetAsync($"api/users/auth?email={email}&password={password}");
+            var values = new Dictionary<string, string>
+        {
+            { "username", email },
+            { "password", password }
+        };
+            var content = new FormUrlEncodedContent(values);
+            HttpResponseMessage response = await client.PostAsync($"token/?username={email}&password={password}", content);
             if (response.IsSuccessStatusCode)
             {
-                User user = await response.Content.ReadAsAsync<User>();
-                return user;
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var tokenResponse = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                 token = tokenResponse.access_token;
+                 role = tokenResponse.role;
+                return (token, role);
             }
-
-             
             else if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 throw new HttpRequestException("Unauthorized", null, response.StatusCode);
             }
             else
-                return null;
+            {
+                throw new HttpRequestException("Error", null, response.StatusCode);
+                /*  HttpResponseMessage response = await client.GetAsync($"api/users/auth?email={email}&password={password}");
+                  if (response.IsSuccessStatusCode)
+                  {
+                      User user = await response.Content.ReadAsAsync<User>();
+                      return user;
+                  }
 
+
+                  else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                  {
+                      throw new HttpRequestException("Unauthorized", null, response.StatusCode);
+                  }
+                  else
+                      return null;
+
+              }*/
+
+        
+            }
         }
-
     }
 }
+
