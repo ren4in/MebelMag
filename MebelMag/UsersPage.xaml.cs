@@ -25,45 +25,88 @@ namespace MebelMag
         public UsersPage()
         {
             InitializeComponent();
+            LoadUsers();
         }
-
-        private void Email_TextChanged(object sender, TextChangedEventArgs e)
+        
+        public async void LoadUsers()
         {
+            HttpResponseMessage response = await Store.client.GetAsync(Store.APP_PATH + "/api/users");
 
-        }
-
-        private async void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            using (var client = new HttpClient())
+            if (response.IsSuccessStatusCode)
             {
-                HttpResponseMessage response = await client.GetAsync(Store.APP_PATH+"/api/users");
+                var usersJson = await response.Content.ReadAsStringAsync();
+                var users = JsonConvert.DeserializeObject<List<User>>(usersJson);
+                DgridStore.ItemsSource = users;
+               
+            }
+            else
+            {
+                MessageBox.Show("Ошибка сервера!");
+            }
+        }
+        
 
-                if (response.IsSuccessStatusCode)
+        private async void BtnDel_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+        
+                int userId = (int)btn.CommandParameter;
+                 if (MessageBox.Show($"Вы точно хотите удалить этого пользователя?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                try
                 {
-                    var usersJson = await response.Content.ReadAsStringAsync();
-                    var users = JsonConvert.DeserializeObject<List<User>>(usersJson);
-                    DgridStore.ItemsSource = users;
-                    foreach (var user in users)
-                    {
-                        MessageBox.Show($"User ID: {user.IdUser}, Name: {user.FirstName}, Role: {user.IdDepartmentNavigation.Name}");
-                    }
+
+                    
+                        HttpResponseMessage response = await Store.client.DeleteAsync(($"{Store.APP_PATH}/api/users/{userId}"));
+                           
+                        if (response.IsSuccessStatusCode)
+                        {
+                        MessageBox.Show("Пользователь успешно удален.");
+                        }
+                        else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                        {
+                        MessageBox.Show("Пользователь не найден.");
+                        }
+                    LoadUsers();
+                     
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Error: Unable to retrieve users.");
+                    MessageBox.Show("");
                 }
             }
         }
-    
+
 
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
 
         }
-        private void BtnDel_Click(object sender, RoutedEventArgs e)
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        private  async void Email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            HttpResponseMessage response = await Store.client.GetAsync($"{Store.APP_PATH}/api/users/email?email={Email.Text}") ;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var usersJson = await response.Content.ReadAsStringAsync();
+                var users = JsonConvert.DeserializeObject<List<User>>(usersJson);
+                DgridStore.ItemsSource = users;
+
+            }
+            else
+            {
+                MessageBox.Show("Ошибка сервера!");
+            }
+        }
+
     }
 }
+ 
