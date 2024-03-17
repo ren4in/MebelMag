@@ -13,7 +13,9 @@ namespace MebelMag
 {
     public class Store
     {
-        public const string APP_PATH = "http://192.168.1.3";
+        //  public const string APP_PATH = "http://192.168.1.3";
+        public const string APP_PATH = "http://localhost:44731";
+
         public static readonly HttpClient client = new HttpClient();
         public static string role="";
         public static async Task<Uri> CreateRoleAsync(Role role)

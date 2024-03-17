@@ -69,7 +69,7 @@ namespace MebelMag
                 switch (Store.role)// определение роли при авторизации. Временно просто выводит название роли, потом будет направлять на соответсвующую страницу
                 {
                     case ("Администратор"):
-                        MessageBox.Show("Администратор");
+                        Manager.MainFrame.Navigate(new UsersPage());
                         break;
                     case ("Продавец"):
                         MessageBox.Show("Продавец");
