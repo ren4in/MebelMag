@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MebelMag;
 
 public partial class User
 {
-    public int IdUser { get; set; }
-
+    [JsonIgnore]
+    public int? IdUser { get; set; }
+    public bool ShouldSerializeIdUser()
+    {
+        // Возвращаем true, если IdUser не равен null (для обновления)
+        // Возвращаем false, если IdUser равен null (для создания)
+        return IdUser.HasValue;
+    }
     public int IdRole { get; set; }
 
     public string FirstName { get; set; } = null!;
@@ -29,8 +36,7 @@ public partial class User
 
     public decimal? Salary { get; set; }
 
-    public decimal? Prize { get; set; }
-
+ 
     public virtual Department? IdDepartmentNavigation { get; set; } = null!;
 
     public virtual Position? IdPositionNavigation { get; set; } = null!;
