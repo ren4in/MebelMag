@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -23,16 +24,31 @@ namespace MebelMag
     public partial class AddEditUser : Page
     {
         //private User _currentuser = new User();
+        private User _currentuser = new User();
 
         public AddEditUser(User _selecteduser)
         {
+            InitializeComponent();
             if (_selecteduser != null)
+            {
                 _currentuser = _selecteduser;
+
+                if (_currentuser.Sex == "м")
+                {
+                    Sex.SelectedIndex = 0;
+                }
+                else
+                {
+                    Sex.SelectedIndex = 1;
+                }
+            }
             DataContext = _currentuser;
+
+
             LoadRoles();
             LoadDepartments();
             LoadPositions();
-            InitializeComponent();
+           
         }
 
         public async void LoadPositions()
@@ -44,6 +60,11 @@ namespace MebelMag
                 var positionsJson = await response.Content.ReadAsStringAsync();
                 var positions = JsonConvert.DeserializeObject<List<Position>>(positionsJson);
                 ComboPosition.ItemsSource = positions.ToList();
+                if (_currentuser != null)
+                {
+                    Position userPosition = positions.FirstOrDefault(d => d.IdPosition == _currentuser.IdPosition);
+                    ComboPosition.SelectedItem = userPosition;
+                }
 
             }
             else
@@ -60,7 +81,13 @@ namespace MebelMag
                 var rolesJson = await response.Content.ReadAsStringAsync();
                 var roles = JsonConvert.DeserializeObject<List<Role>>(rolesJson);
                 ComboRole.ItemsSource = roles.ToList();
+                if (_currentuser != null)
+                {
+                    Role userRole = roles.FirstOrDefault(r => r.IdRole == _currentuser.IdRole);
 
+                    // Установить выбранный элемент в ComboBox
+                    ComboRole.SelectedItem = userRole;
+                }
             }
             else
             {
@@ -76,9 +103,15 @@ namespace MebelMag
             {
                 var departmentsJson = await response.Content.ReadAsStringAsync();
                 var departments = JsonConvert.DeserializeObject<List<Department>>(departmentsJson);
+               
                 ComboDepartment.ItemsSource = departments.ToList();
+                if (_currentuser != null)
+                {
+                    Department userDepartment = departments.FirstOrDefault(d => d.IdDepartment == _currentuser.IdDepartment);
+                    ComboDepartment.SelectedItem = userDepartment;
+                }
 
-            }
+                }
             else
             {
                 MessageBox.Show("Ошибка сервера!");
@@ -89,7 +122,7 @@ namespace MebelMag
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             errors = new StringBuilder();
-             if (string.IsNullOrWhiteSpace(_currentuser.LastName))
+            if (string.IsNullOrWhiteSpace(_currentuser.LastName))
                 errors.AppendLine("Укажите фамилию пользователя!");
             if (string.IsNullOrWhiteSpace(_currentuser.FirstName))
                 errors.AppendLine("Укажите имя пользователя!");
@@ -137,9 +170,9 @@ namespace MebelMag
                     _currentuser.Sex = "м";
                 else
                     _currentuser.Sex = "ж";
-                if (_currentuser.IdUser == null)
+                //if (_currentuser.IdUser == null)
                 {
-                     if (string.IsNullOrWhiteSpace(_currentuser.FirstName))
+                    if (string.IsNullOrWhiteSpace(_currentuser.FirstName))
                         errors.AppendLine("Укажите фамилию пользователя!");
                     _currentuser.IdPosition = _currentuser.IdPositionNavigation.IdPosition;
                     _currentuser.IdPositionNavigation = null;
@@ -149,16 +182,36 @@ namespace MebelMag
                     _currentuser.IdDepartmentNavigation = null;
                     var userJson = JsonConvert.SerializeObject(_currentuser);
                     var content = new StringContent(userJson, Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await Store.client.PostAsync(Store.APP_PATH + "/api/users", content);
-                    if (response.IsSuccessStatusCode)
+                    if (_currentuser.IdUser == null)
                     {
-                        MessageBox.Show("Пользователь успешно добавлен");
+                        HttpResponseMessage response = await Store.client.PostAsync(Store.APP_PATH + "/api/users", content);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show("Пользователь успешно добавлен");
+                            Manager.MainFrame.Navigate(new UsersPage());
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ошибка при добавлении пользователя");
+                        }
+
                     }
                     else
                     {
-                        MessageBox.Show("Ошибка при добавлении пользователя");
-                    }
+                        HttpResponseMessage response = await Store.client.PutAsync(Store.APP_PATH + "/api/users/" + _currentuser.IdUser, content);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show("Данные успешно изменены!");
+                            Manager.MainFrame.Navigate(new UsersPage());
 
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ошибка при изменении данных");
+                        }
+
+                    }
                 }
             }
         }

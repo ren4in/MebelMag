@@ -81,6 +81,7 @@ namespace MebelMag
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
+            Manager.MainFrame.Navigate(new AddEditUser((sender as Button).DataContext as User));
 
         }
 

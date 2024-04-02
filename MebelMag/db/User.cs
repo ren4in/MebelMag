@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace MebelMag;
 
-public partial class User
+public partial class User : INotifyPropertyChanged
 {
     [JsonIgnore]
     public int? IdUser { get; set; }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     public bool ShouldSerializeIdUser()
     {
         // Возвращаем true, если IdUser не равен null (для обновления)
