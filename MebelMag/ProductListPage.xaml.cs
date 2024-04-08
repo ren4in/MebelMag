@@ -28,7 +28,8 @@ namespace MebelMag
             LoadProducts();
             LoadCategories();
         }
-
+        private List<Product> currentproducts;
+        private List<Product> allproducts;
         public async void LoadCategories()
         {
 
@@ -46,6 +47,68 @@ namespace MebelMag
                 ComboCategory.ItemsSource = currentcategories;
             }
         }
+        
+        public async void UpdateProducts()
+        {
+            currentproducts = allproducts;
+            if (ComboCategory.SelectedIndex > 0)
+            {
+                currentproducts = currentproducts.Where(p => p.IdProductCategoryNavigation.CategoryName == ComboCategory.Text).ToList();
+            }
+
+            currentproducts = currentproducts.Where(p => p.ProductName.ToLower().Contains(Name.Text.ToLower())).ToList();
+            if (MinPrice.Text != "")
+            {
+                currentproducts = currentproducts.Where(p => p.Price >= Convert.ToDecimal(MinPrice.Text)).ToList();
+
+            }
+
+            if (MaxPrice.Text != "")
+            {
+                currentproducts = currentproducts.Where(p => p.Price <= Convert.ToDecimal(MaxPrice.Text)).ToList();
+
+            }
+            if (WidthMin.Text != "")
+            {
+                currentproducts = currentproducts.Where(p => p.Width >= Convert.ToInt32(WidthMin.Text)).ToList();
+
+            }
+
+            if (WidthMax.Text != "")
+            {
+                currentproducts = currentproducts.Where(p => p.Width <= Convert.ToInt32(WidthMax.Text)).ToList();
+
+            }
+
+            if (LengthMin.Text != "")
+            {
+                currentproducts = currentproducts.Where(p => p.Length >= Convert.ToInt32(LengthMin.Text)).ToList();
+
+            }
+
+            if (LengthMax.Text != "")
+            {
+                currentproducts = currentproducts.Where(p => p.Length <= Convert.ToInt32(LengthMax.Text)).ToList();
+
+            }
+
+            if (HeightMin.Text != "")
+            {
+                currentproducts = currentproducts.Where(p => p.Height >= Convert.ToInt32(HeightMin.Text)).ToList();
+
+            }
+
+            if (HeightMax.Text != "")
+            {
+                currentproducts = currentproducts.Where(p => p.Height <= Convert.ToInt32(HeightMax.Text)).ToList();
+
+            }
+            DgridProducts.ItemsSource = currentproducts;
+
+        }
+
+         
+
         public async void LoadProducts()
         {
             HttpResponseMessage response = await Store.client.GetAsync(Store.APP_PATH + "/api/products");
@@ -53,67 +116,16 @@ namespace MebelMag
             if (response.IsSuccessStatusCode)
             {
                 var productJson = await response.Content.ReadAsStringAsync();
-                var currentproducts = JsonConvert.DeserializeObject<List<Product>>(productJson);
-                if (ComboCategory.SelectedIndex > 0)
-                {
-                    currentproducts = currentproducts.Where(p => p.IdProductCategoryNavigation.CategoryName == ComboCategory.Text).ToList();
-                }
-
-                currentproducts = currentproducts.Where(p => p.ProductName.ToLower().Contains(Name.Text.ToLower())).ToList();
-                if (MinPrice.Text != "")
-                {
-                    currentproducts = currentproducts.Where(p => p.Price >= Convert.ToDecimal(MinPrice.Text)).ToList();
-
-                }
-
-                if (MaxPrice.Text != "")
-                {
-                    currentproducts = currentproducts.Where(p => p.Price <= Convert.ToDecimal(MaxPrice.Text)).ToList();
-
-                }
-                if (WidthMin.Text != "")
-                {
-                    currentproducts = currentproducts.Where(p => p.Width >= Convert.ToInt32(WidthMin.Text)).ToList();
-
-                }
-
-                if (WidthMax.Text != "")
-                {
-                    currentproducts = currentproducts.Where(p => p.Width <= Convert.ToInt32(WidthMax.Text)).ToList();
-
-                }
-
-                if (LengthMin.Text != "")
-                {
-                    currentproducts = currentproducts.Where(p => p.Length >= Convert.ToInt32(LengthMin.Text)).ToList();
-
-                }
-
-                if (LengthMax.Text != "")
-                {
-                    currentproducts = currentproducts.Where(p => p.Length <= Convert.ToInt32(LengthMax.Text)).ToList();
-
-                }
-
-                if (HeightMin.Text != "")
-                {
-                    currentproducts = currentproducts.Where(p => p.Height >= Convert.ToInt32(HeightMin.Text)).ToList();
-
-                }
-
-                if (HeightMax.Text != "")
-                {
-                    currentproducts = currentproducts.Where(p => p.Height <= Convert.ToInt32(HeightMax.Text)).ToList();
-
-                }
-                DgridProducts.ItemsSource = currentproducts;
-
+                allproducts = JsonConvert.DeserializeObject<List<Product>>(productJson);
+                DgridProducts.ItemsSource = allproducts;
             }
+
             else
             {
                 MessageBox.Show("Ошибка сервера!");
             }
             }
+        
 
         private void WidthMax_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -122,53 +134,53 @@ namespace MebelMag
 
         private void WidthMin_TextChanged(object sender, TextChangedEventArgs e)
         {
-            LoadProducts();
+            UpdateProducts();
         }
 
         private void LehgthMin_TextChanged(object sender, TextChangedEventArgs e)
         {
-            LoadProducts();
+            UpdateProducts();
         }
 
         private void HeightMin_TextChanged(object sender, TextChangedEventArgs e)
         {
-            LoadProducts();
+            UpdateProducts();
         }
 
         private void HeightMax_TextChanged(object sender, TextChangedEventArgs e)
         {
-            LoadProducts();
+            UpdateProducts();
         }
 
         private void Name_TextChanged(object sender, TextChangedEventArgs e)
         {
-            LoadProducts();
+            UpdateProducts();
         }
 
         private void MinPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            LoadProducts();
+            UpdateProducts();
         }
 
         private void MaxPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            LoadProducts();
+            UpdateProducts();
         }
 
         private void ComboCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            LoadProducts();
+            //   UpdateProducts();
         }
 
         private void ComboCategory_DropDownClosed(object sender, EventArgs e)
         {
-            LoadProducts();
+            UpdateProducts();
 
         }
 
         private void LengthMax_TextChanged(object sender, TextChangedEventArgs e)
         {
-            LoadProducts();
+            UpdateProducts();
         }
     }
 }
