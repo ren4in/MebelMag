@@ -72,7 +72,7 @@ namespace MebelMag
                         Manager.MainFrame.Navigate(new UsersPage());
                         break;
                     case ("Продавец"):
-                        MessageBox.Show("Продавец");
+                        Manager.MainFrame.Navigate(new SellerPage());
                         break;
                     case ("Кладовщик"):
                         MessageBox.Show("Кладовщик");

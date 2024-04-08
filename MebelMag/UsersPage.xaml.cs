@@ -36,6 +36,7 @@ namespace MebelMag
             {
                 var usersJson = await response.Content.ReadAsStringAsync();
                 var users = JsonConvert.DeserializeObject<List<User>>(usersJson);
+               
                 DgridStore.ItemsSource = users;
                
             }
