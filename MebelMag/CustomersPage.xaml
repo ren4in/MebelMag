@@ -1,0 +1,76 @@
+﻿<Page x:Class="MebelMag.CustomersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MebelMag"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CustomersPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="377*"></RowDefinition>
+            <RowDefinition Height="377*"></RowDefinition>
+
+            <RowDefinition Height="2500*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+
+
+        </Grid.ColumnDefinitions>
+        <DataGrid  AutoGenerateColumns="False" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7"  IsReadOnly="True" Margin="6, 2, 6, 0" x:Name ="DgridStore" SelectionChanged="DgridStore_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Код" Binding="{Binding IdCustomer}" Width="*" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="*" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="*" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}" Width="*" ></DataGridTextColumn>
+                <DataGridTextColumn Header="E-mail" Binding="{Binding EMail}" Width="*" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Телефонный номер" Binding="{Binding PhoneNumber}" Width="*" ></DataGridTextColumn>
+
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать" Name="BtnEdit" Click="BtnEdit_Click"  ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Удалить" Name="BtnDel1" Click="BtnDel_Click" CommandParameter="{Binding IdCustomer}"  ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Заказы клиента" Name="BtnOrders" Click="BtnOrders_Click" CommandParameter="{Binding IdCustomer}"  ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <Button Content="Добавить" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center"  Name="BtnAdd"  Click="BtnAdd_Click"></Button>
+        <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7">
+
+            <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
+            <DockPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" HorizontalAlignment="Center">
+                <TextBlock Text="E-Mail"  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBlock>
+                <TextBox x:Name="Email"  Grid.Row="1" HorizontalAlignment="Center" TextChanged="Email_TextChanged"  ></TextBox>
+            </DockPanel>
+            <DockPanel Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="7" HorizontalAlignment="Right"/>
+        </WrapPanel>
+
+    </Grid>
+</Page>

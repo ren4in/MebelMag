@@ -1,0 +1,98 @@
+﻿<Page x:Class="MebelMag.PurchaseContentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MebelMag"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PurchaseContentPage">
+
+    <Grid>
+
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="377*"></RowDefinition>
+                <RowDefinition Height="377*"></RowDefinition>
+
+                <RowDefinition Height="2500*"></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+
+
+            </Grid.ColumnDefinitions>
+            <DataGrid AutoGenerateColumns="False" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"  IsReadOnly="True" Margin="6, 2, 6, 0" x:Name ="DgridStore">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Код товара" Binding="{Binding IdProduct}" Width="*" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Название" Binding="{Binding  IdProductNavigation.ProductName}" Width="*" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Amount}" Width="*" ></DataGridTextColumn>
+<DataGridTemplateColumn Width="auto">
+    <DataGridTemplateColumn.CellTemplate>
+        <DataTemplate>
+            <Button Content="Удалить" Name="BtnDel" CommandParameter="{Binding IdProduct}"  Click="BtnDel_Click"  ></Button>
+        </DataTemplate>
+    </DataGridTemplateColumn.CellTemplate>
+</DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Изменить" Name="BtnEdit" CommandParameter="{Binding IdProduct}"  Click="Edit_Click"  ></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid AutoGenerateColumns="False" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="6"  IsReadOnly="True" Margin="6, 2, 6, 0" x:Name ="DgridProducts">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Код товара" Binding="{Binding IdProduct}" Width="*" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Название" Binding="{Binding ProductName}" Width="*" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Количество на складе" Binding="{Binding Amount}" Width="*" ></DataGridTextColumn>
+                    <DataGridTemplateColumn Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Добавить" Name="BtnAss" CommandParameter="{Binding IdProduct}"  Click="BtnAdd_Click"  ></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+            <Button Content="Добавить" Grid.Row="0" Name="BtnAdd" Grid.Column="0" Grid.ColumnSpan="2" Click="BtnAdd_Click"     ></Button>
+            <Button Content="Изменить количество" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Center"  Name="Edit" Click="Edit_Click"  ></Button>
+            <Button Content="Печать" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Center"  Name="Print" Click="Print_Click"  ></Button>
+
+            <Button Content="Удалить" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="5" HorizontalAlignment="Right" Name="BtnDel" Click="BtnDel_Click"  ></Button>
+            <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7">
+
+
+                <DockPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" HorizontalAlignment="Center">
+                    <TextBlock Text="Название: "  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBlock>
+                    <TextBox x:Name="Name"  Grid.Row="1" HorizontalAlignment="Center" TextChanged="Name_TextChanged"   ></TextBox>
+                </DockPanel>
+            </WrapPanel>
+            <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7">
+                <DockPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" HorizontalAlignment="Center">
+                    <TextBlock Text="Количество: "  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" ></TextBlock>
+                    <TextBox x:Name="Amount"  Grid.Row="1" HorizontalAlignment="Center" TextChanged="Amount_TextChanged"  ></TextBox>
+                </DockPanel>
+            </WrapPanel>
+
+        </Grid>
+
+    </Grid>
+</Page>

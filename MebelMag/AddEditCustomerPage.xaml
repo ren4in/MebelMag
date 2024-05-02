@@ -1,0 +1,48 @@
+﻿<Page x:Class="MebelMag.AddEditCustomerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MebelMag"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddEditCustomerPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock TextAlignment="Center" Grid.Row="0" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Фамилия" ></TextBlock>
+        <TextBox Text="{Binding LastName}" Grid.Column="2" VerticalAlignment="Center"  Grid.Row="0" HorizontalAlignment="Center" Name="LastName"></TextBox>
+        <TextBlock TextAlignment="Center" Grid.Row="1" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Имя" ></TextBlock>
+        <TextBox  Text="{Binding FirstName}" Grid.Column="2" VerticalAlignment="Center"  Grid.Row="1" HorizontalAlignment="Center" Name="FirstName"></TextBox>
+
+        <TextBlock   TextAlignment="Center" Grid.Row="2" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Отчество" ></TextBlock>
+        <TextBox  Grid.Column="2" Text="{Binding MiddleName}" VerticalAlignment="Center"  Grid.Row="2" HorizontalAlignment="Center" Name="MiddleName"></TextBox>
+        <TextBlock  TextAlignment="Center" Grid.Row="3" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="E-mail" ></TextBlock>
+        <TextBox  Text="{Binding EMail}" Grid.Column="2" VerticalAlignment="Center"  Grid.Row="3" HorizontalAlignment="Center" Name="Email"></TextBox>
+        <TextBlock TextAlignment="Center" Grid.Row="4" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Телефон" ></TextBlock>
+        <TextBox Grid.Column="2" Text="{Binding  PhoneNumber}" VerticalAlignment="Center"  Grid.Row="4" HorizontalAlignment="Center" Name="Phone"></TextBox>
+        <Button Grid.Column="1"  Grid.ColumnSpan="3" VerticalAlignment="Center"  Grid.Row="5"  HorizontalAlignment="Center" Name="BtnSave" Click="BtnSave_Click">
+            <TextBlock Text="Сохранить" FontSize="20" VerticalAlignment="Center"></TextBlock>
+        </Button>
+
+
+    </Grid>
+</Page>

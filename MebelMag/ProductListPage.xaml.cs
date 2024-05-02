@@ -30,6 +30,11 @@ namespace MebelMag
         }
         private List<Product> currentproducts;
         private List<Product> allproducts;
+    
+        private void PageLoaded()
+        {
+            LoadProducts();
+        }
         public async void LoadCategories()
         {
 
@@ -111,7 +116,7 @@ namespace MebelMag
 
         public async void LoadProducts()
         {
-            HttpResponseMessage response = await Store.client.GetAsync(Store.APP_PATH + "/api/products");
+            HttpResponseMessage response = await Store.client.GetAsync(Store.APP_PATH + "/api/products/api/GetProducts");
 
             if (response.IsSuccessStatusCode)
             {
@@ -181,6 +186,11 @@ namespace MebelMag
         private void LengthMax_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateProducts();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

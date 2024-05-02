@@ -18,6 +18,8 @@ namespace MebelMag
 
         public static readonly HttpClient client = new HttpClient();
         public static string role="";
+        public static int? userId;
+
         public static async Task<Uri> CreateRoleAsync(Role role)
         {
             //     MessageBox.Show(role.Role_Name + " " + role.id_Role);
@@ -51,9 +53,8 @@ namespace MebelMag
 
 
 
-
-
-
+       
+        
         public static async Task<(string, string)> UserAuthAsync(string email, string password)
         {
             var values = new Dictionary<string, string>
@@ -67,6 +68,10 @@ namespace MebelMag
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var tokenResponse = JsonConvert.DeserializeObject<dynamic>(responseContent);
+#pragma warning disable CS8602 // Разыменование вероятной пустой ссылки.
+            userId = tokenResponse.idUser;
+#pragma warning restore CS8602 // Разыменование вероятной пустой ссылки.
+               
                 string token = tokenResponse.access_token;
                  role = tokenResponse.role;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

@@ -45,6 +45,7 @@ public partial class User : INotifyPropertyChanged
 
     public virtual Position? IdPositionNavigation { get; set; } = null!;
 
+
     public virtual Role? IdRoleNavigation { get; set; } = null!;
 
     public virtual ICollection<Inventory> Inventories { get; set; } = new List<Inventory>();

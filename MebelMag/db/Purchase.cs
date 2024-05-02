@@ -1,12 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace MebelMag;
 
 public partial class Purchase
 {
-    public int IdPurchase { get; set; }
+    [JsonIgnore]
+    public int? IdPurchase { get; set; }
+    public event PropertyChangedEventHandler? PropertyChanged;
 
+    public bool ShouldSerializeIdPurchase()
+    {
+        // Возвращаем true, если IdUser не равен null (для обновления)
+        // Возвращаем false, если IdUser равен null (для создания)
+        return IdPurchase.HasValue;
+    }
     public int? IdCustomer { get; set; }
 
     public DateTime PurchaseDateTime { get; set; }

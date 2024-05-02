@@ -174,11 +174,17 @@ namespace MebelMag
                 {
                     if (string.IsNullOrWhiteSpace(_currentuser.FirstName))
                         errors.AppendLine("Укажите фамилию пользователя!");
+#pragma warning disable CS8602 // Разыменование вероятной пустой ссылки.
                     _currentuser.IdPosition = _currentuser.IdPositionNavigation.IdPosition;
+#pragma warning restore CS8602 // Разыменование вероятной пустой ссылки.
                     _currentuser.IdPositionNavigation = null;
+#pragma warning disable CS8602 // Разыменование вероятной пустой ссылки.
                     _currentuser.IdRole = _currentuser.IdRoleNavigation.IdRole;
+#pragma warning restore CS8602 // Разыменование вероятной пустой ссылки.
                     _currentuser.IdRoleNavigation = null;
+#pragma warning disable CS8602 // Разыменование вероятной пустой ссылки.
                     _currentuser.IdDepartment = _currentuser.IdDepartmentNavigation.IdDepartment;
+#pragma warning restore CS8602 // Разыменование вероятной пустой ссылки.
                     _currentuser.IdDepartmentNavigation = null;
                     var userJson = JsonConvert.SerializeObject(_currentuser);
                     var content = new StringContent(userJson, Encoding.UTF8, "application/json");
