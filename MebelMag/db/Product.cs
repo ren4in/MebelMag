@@ -1,13 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace MebelMag;
 
-public partial class Product
+public partial class Product : INotifyPropertyChanged
 {
-    public int IdProduct { get; set; }
+    [JsonIgnore]
+    public int? IdProduct { get; set; }
 
-    public int? IdProductCategory { get; set; }
+ 
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+ 
+   public bool ShouldSerializeIdProduct()
+    {
+        // Возвращаем true, если IdUser не равен null (для обновления)
+        // Возвращаем false, если IdUser равен null (для создания)
+        return IdProduct.HasValue;
+    }
+    public int IdProductCategory { get; set; }
 
     public string ProductName { get; set; } = null!;
 

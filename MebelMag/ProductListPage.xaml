@@ -91,7 +91,6 @@
 
         <DataGrid AutoGenerateColumns="False" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7"  IsReadOnly="True" Margin="6, 2, 6, 0" x:Name ="DgridProducts">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Код товара" Binding="{Binding IdProduct}" Width="*" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Название" Binding="{Binding ProductName}" Width="*" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Ширина" Binding="{Binding Width}" Width="*" ></DataGridTextColumn>

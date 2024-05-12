@@ -1,0 +1,82 @@
+﻿<Page x:Class="MebelMag.AddEditPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MebelMag"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddEditPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+
+            <RowDefinition Height="*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock TextAlignment="Center" Grid.Row="0" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Категория" ></TextBlock>
+        <ComboBox Grid.Column="2" SelectedItem="{Binding  IdProductCategoryNavigation}" VerticalAlignment="Center"  Grid.Row="0" SelectedIndex="0"  HorizontalAlignment="Center" DisplayMemberPath="CategoryName" Name="Category"></ComboBox>
+        <TextBlock TextAlignment="Center" Grid.Row="1" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Название" ></TextBlock>
+        <TextBox  Text="{Binding ProductName}" Grid.Column="2" VerticalAlignment="Center"  Grid.Row="1" HorizontalAlignment="Center" Name="Name"></TextBox>
+
+        <TextBlock   TextAlignment="Center" Grid.Row="2" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Описание" ></TextBlock>
+        <TextBox  Grid.Column="2" Text="{Binding Description}" VerticalAlignment="Center"  Grid.Row="2" HorizontalAlignment="Center" Name="Description"></TextBox>
+        <TextBlock  TextAlignment="Center" Grid.Row="3" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Цена" ></TextBlock>
+        <TextBox  Text="{Binding Price}" Grid.Column="2" VerticalAlignment="Center"  Grid.Row="3" HorizontalAlignment="Center" Name="Price"></TextBox>
+
+
+        <TextBlock  TextAlignment="Center" Grid.Row="4" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Фото" ></TextBlock>
+        <Button Grid.Column="2" Width="130" Height="20"      VerticalAlignment="Center"  Grid.Row="4"  HorizontalAlignment="Center" Name="BtnImage" Click="BtnImage_Click">
+            <TextBlock Text="Добавить фото"  FontSize="15" VerticalAlignment="Center"></TextBlock>
+        </Button>
+
+        <TextBlock TextAlignment="Center" Grid.Row="6" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Длина" ></TextBlock>
+        <TextBox Grid.Column="2" Text="{Binding  Length}" VerticalAlignment="Center"  Grid.Row="6" HorizontalAlignment="Center" Name="Length"></TextBox>
+
+
+
+        <TextBlock TextAlignment="Center" Grid.Row="5" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Ширина" ></TextBlock>
+        <TextBox Grid.Column="2" Text="{Binding  Width}" VerticalAlignment="Center"  Grid.Row="5" HorizontalAlignment="Center" Name="Width"></TextBox>
+
+
+        <TextBlock TextAlignment="Center" Grid.Row="7" HorizontalAlignment="Center" FontSize="24"  Grid.Column="1" VerticalAlignment="Center" Text="Высота" ></TextBlock>
+        <TextBox Grid.Column="2" Text="{Binding  Height}" VerticalAlignment="Center"  Grid.Row="7" HorizontalAlignment="Center" Name="Height"></TextBox>
+
+
+        <Button Grid.Column="1"  Grid.ColumnSpan="3" VerticalAlignment="Center"  Grid.Row="8"  HorizontalAlignment="Center" Name="BtnSave" Click="BtnSave_Click">
+            <TextBlock Text="Сохранить" FontSize="20" VerticalAlignment="Center"></TextBlock>
+        </Button>
+
+        <Image Width="auto"   Name="Photo"  Grid.Row="1" Grid.RowSpan="5" Grid.Column="3" Stretch="UniformToFill" HorizontalAlignment="Center" Margin="5">
+            <Image.Source>
+                <Binding Path="Photo">
+                    <Binding.TargetNullValue>
+                        <ImageSource>C:\projects\MebelMag\MebelMag\image-not-found.jpg</ImageSource>
+                    </Binding.TargetNullValue>
+                </Binding>
+            </Image.Source>
+        </Image>
+
+
+
+    </Grid>
+
+
+</Page>

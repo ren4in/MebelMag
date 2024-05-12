@@ -5,15 +5,14 @@ using System.ComponentModel;
 
 namespace MebelMag;
 
-public partial class Customer
+public partial class Customer : INotifyPropertyChanged
 {
     [JsonIgnore]
-
     public int? IdCustomer { get; set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public bool ShouldSerializeIdUser()
+    public bool ShouldSerializeIdCustomer()
     {
         // Возвращаем true, если IdUser не равен null (для обновления)
         // Возвращаем false, если IdUser равен null (для создания)

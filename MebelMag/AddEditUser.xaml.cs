@@ -72,6 +72,8 @@ namespace MebelMag
                 MessageBox.Show("Ошибка сервера!");
             }
         }
+
+
         public async void LoadRoles()
         {
             HttpResponseMessage response = await Store.client.GetAsync(Store.APP_PATH + "/api/roles");

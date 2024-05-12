@@ -63,8 +63,11 @@ namespace MebelMag
                     return;
                 }
 
+                   
                     var customerJson = JsonConvert.SerializeObject(_currentCustomer);
-                    var content = new StringContent(customerJson, Encoding.UTF8, "application/json");
+                    customerJson = customerJson.Replace(@",""IdCustomer"": null", "");
+
+                var content = new StringContent(customerJson, Encoding.UTF8, "application/json");
                 
                 if (_currentCustomer.IdCustomer == null)
                 {

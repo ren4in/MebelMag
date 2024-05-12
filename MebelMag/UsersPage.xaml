@@ -30,7 +30,6 @@
         </Grid.ColumnDefinitions>
         <DataGrid   AutoGenerateColumns="False" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7"  IsReadOnly="True" Margin="6,4,6,-2" x:Name ="DgridStore"  >
             <DataGrid.Columns>
-                <DataGridTextColumn    Header="Код" Binding="{Binding IdUser}" Width="*" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="*" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="*" ></DataGridTextColumn>
                 <DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}" Width="*" ></DataGridTextColumn>
